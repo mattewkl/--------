@@ -9,7 +9,7 @@
           class="notebook__hole"
         />
       </div>
-      <AppHeader>Заметки для теста в МКК Небус</AppHeader>
+      <AppHeader/>
       <main id="main" class="notebook__sheet">
         <slot />
       </main>

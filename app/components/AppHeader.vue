@@ -3,7 +3,7 @@
     <div class="app-header__titles">
       <p class="app-header__kicker">рабочая тетрадь</p>
       <h1 class="app-header__title">
-        <slot></slot>
+        <slot>Заметки для теста в МКК Небус</slot>
       </h1>
     </div>
     <div v-if="$slots.actions" class="app-header__actions">
