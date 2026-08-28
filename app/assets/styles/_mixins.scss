@@ -1,0 +1,53 @@
+@mixin lined-paper {
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(90deg, var(--margin) 0 2px, transparent 2px),
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent calc(var(--rule-gap) - 1px),
+      var(--rule) calc(var(--rule-gap) - 1px),
+      var(--rule) var(--rule-gap)
+    );
+  background-position: var(--spine) 0, 0 0.55rem;
+  background-repeat: no-repeat, repeat;
+  background-size: 2px 100%, 100% var(--rule-gap);
+}
+
+@mixin focus-ring {
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: 2px dashed var(--focus);
+    outline-offset: 3px;
+  }
+}
+
+@mixin press-paper {
+  transition:
+    transform var(--duration) ease,
+    box-shadow var(--duration) ease,
+    background-color var(--duration) ease;
+
+  &:hover:not(:disabled) {
+    transform: rotate(-0.4deg) translateY(-1px);
+  }
+
+  &:active:not(:disabled) {
+    transform: translate(1px, 1px);
+    box-shadow: none;
+  }
+}
+
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    &,
+    &::before,
+    &::after {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+}
