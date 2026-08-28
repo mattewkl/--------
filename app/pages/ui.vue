@@ -5,7 +5,7 @@
     </p>
 
     <h2 class="ui-page__heading">Каталог UI</h2>
-    <p class="ui-page__lead">Все переиспользуемые компоненты. Сюда же будем добавлять модалки и карточки заметок.</p>
+    <p class="ui-page__lead">Все переиспользуемые компоненты. Модалки проверяйте только с клавиатуры: Tab, Shift+Tab, Escape.</p>
 
     <section class="ui-section" aria-labelledby="ui-header">
       <h3 id="ui-header" class="ui-section__title">AppHeader</h3>
@@ -80,6 +80,37 @@
         </template>
       </EmptyState>
     </section>
+
+    <section class="ui-section" aria-labelledby="ui-modals">
+      <h3 id="ui-modals" class="ui-section__title">BaseModal и ConfirmDialog</h3>
+      <div class="ui-section__row">
+        <BaseButton variant="pencil" @click="modalOpen = true">
+          Открыть модалку
+        </BaseButton>
+        <BaseButton variant="danger" @click="confirmOpen = true">
+          Открыть подтверждение
+        </BaseButton>
+      </div>
+      <p v-if="lastAction" class="ui-section__note">Последнее действие: {{ lastAction }}</p>
+    </section>
+
+    <BaseModal v-model:open="modalOpen" title="Листок поверх тетради">
+      <p>Tab ходит только внутри окна. Escape и клик по полю закрывают его. Фокус вернётся на кнопку.</p>
+      <template #footer>
+        <BaseButton variant="ghost" @click="modalOpen = false">Закрыть</BaseButton>
+        <BaseButton @click="modalOpen = false">Понятно</BaseButton>
+      </template>
+    </BaseModal>
+
+    <ConfirmDialog
+      v-model:open="confirmOpen"
+      title="Удалить черновик?"
+      message="Это учебный диалог. Подтверждение без alert()."
+      confirm-label="Удалить"
+      danger
+      @confirm="lastAction = 'подтвердили'"
+      @cancel="lastAction = 'отменили'"
+    />
   </div>
 </template>
 
@@ -87,6 +118,10 @@
 useHead({
   title: 'Каталог UI',
 })
+
+const modalOpen = ref(false)
+const confirmOpen = ref(false)
+const lastAction = ref('')
 </script>
 
 <style scoped lang="scss">
@@ -134,5 +169,10 @@ useHead({
 
 .ui-section__demo {
   padding: 0.25rem 0;
+}
+
+.ui-section__note {
+  margin-top: 0.6rem;
+  color: var(--muted);
 }
 </style>
