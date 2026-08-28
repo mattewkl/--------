@@ -3,9 +3,14 @@
 .output
 .data
 dist
+.nuxtrc
 
 # Dependencies
 node_modules
+
+# Tests
+coverage
+.vitest
 
 # Logs
 logs
@@ -15,6 +20,9 @@ logs
 .env
 .env.*
 !.env.example
+
+# Cursor (локальные настройки и скиллы — не коммитить)
+.cursor/
 
 # IDE
 .idea

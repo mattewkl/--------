@@ -5,7 +5,7 @@
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .page {
   font-family: system-ui, sans-serif;
   padding: 2rem;
