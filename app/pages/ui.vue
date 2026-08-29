@@ -6,6 +6,7 @@
 
     <h2 class="ui-page__heading">Каталог UI</h2>
     <p class="ui-page__lead">Все переиспользуемые компоненты. Модалки проверяйте только с клавиатуры: Tab, Shift+Tab, Escape.</p>
+    <p v-if="lastAction" class="ui-section__note">Последнее действие: {{ lastAction }}</p>
 
     <section class="ui-section" aria-labelledby="ui-header">
       <h3 id="ui-header" class="ui-section__title">AppHeader</h3>
@@ -91,7 +92,6 @@
           Открыть подтверждение
         </BaseButton>
       </div>
-      <p v-if="lastAction" class="ui-section__note">Последнее действие: {{ lastAction }}</p>
     </section>
 
     <BaseModal v-model:open="modalOpen" title="Листок поверх тетради">
@@ -111,17 +111,103 @@
       @confirm="lastAction = 'подтвердили'"
       @cancel="lastAction = 'отменили'"
     />
+
+    <section class="ui-section" aria-labelledby="ui-cards">
+      <h3 id="ui-cards" class="ui-section__title">NoteCard и превью Todo</h3>
+      <p class="ui-section__note">Чекбоксы в превью только для вида, отметить нельзя. Четвёртый пункт скрыт за «ещё».</p>
+      <div class="ui-cards">
+        <NoteCard
+          v-for="note in MOCK_NOTES"
+          :key="note.id"
+          :note="note"
+          @edit="lastAction = `изменить ${$event}`"
+          @remove="lastAction = `удалить ${$event}`"
+        />
+      </div>
+    </section>
+
+    <section class="ui-section" aria-labelledby="ui-editor">
+      <h3 id="ui-editor" class="ui-section__title">NoteEditor</h3>
+      <p class="ui-section__note">Локальный mock: без сохранения и без настоящей истории. Undo/Redo здесь для вида кнопок.</p>
+      <NoteEditor
+        :title="editor.title"
+        :todos="editor.todos"
+        :title-error="titleError"
+        :can-save="canSave"
+        :can-undo="true"
+        :can-redo="false"
+        @update:title="editor.title = $event"
+        @add-todo="addTodo"
+        @remove-todo="removeTodo"
+        @toggle-todo="toggleTodo"
+        @update-todo-text="updateTodoText"
+        @save="lastAction = 'сохранить (mock)'"
+        @cancel="lastAction = 'отменить редактирование (mock)'"
+        @remove="lastAction = 'удалить заметку (mock)'"
+        @undo="lastAction = 'undo (mock)'"
+        @redo="lastAction = 'redo (mock)'"
+      />
+    </section>
+
+    <section class="ui-section" aria-labelledby="ui-draft">
+      <h3 id="ui-draft" class="ui-section__title">DraftRecoveryDialog</h3>
+      <BaseButton variant="pencil" @click="draftOpen = true">
+        Показать восстановление черновика
+      </BaseButton>
+    </section>
+
+    <DraftRecoveryDialog
+      v-model:open="draftOpen"
+      @restore="lastAction = 'восстановить черновик'"
+      @discard="lastAction = 'отказаться от черновика'"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
+import { MOCK_NOTES } from '~/mocks/notes'
+import type { Note } from '~/types/note'
+
 useHead({
   title: 'Каталог UI',
 })
 
 const modalOpen = ref(false)
 const confirmOpen = ref(false)
+const draftOpen = ref(false)
 const lastAction = ref('')
+
+const editor = reactive<Note>(structuredClone(MOCK_NOTES[0] as Note))
+const titleError = computed(() => {
+  return editor.title.trim() ? '' : 'Название не может быть пустым'
+})
+const canSave = computed(() => editor.title.trim().length > 0)
+
+function addTodo(text: string): void {
+  editor.todos.push({
+    id: crypto.randomUUID(),
+    text,
+    completed: false,
+  })
+}
+
+function removeTodo(id: string): void {
+  editor.todos = editor.todos.filter(todo => todo.id !== id)
+}
+
+function toggleTodo(id: string): void {
+  const todo = editor.todos.find(item => item.id === id)
+  if (todo) {
+    todo.completed = !todo.completed
+  }
+}
+
+function updateTodoText(id: string, text: string): void {
+  const todo = editor.todos.find(item => item.id === id)
+  if (todo) {
+    todo.text = text
+  }
+}
 </script>
 
 <style scoped lang="scss">
@@ -174,5 +260,22 @@ const lastAction = ref('')
 .ui-section__note {
   margin-top: 0.6rem;
   color: var(--muted);
+}
+
+.ui-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+
+.ui-cards :deep(.note-card:nth-child(even)) {
+  transform: rotate(0.8deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ui-cards :deep(.note-card:nth-child(even)) {
+    transform: none;
+  }
 }
 </style>
