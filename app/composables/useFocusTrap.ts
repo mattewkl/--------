@@ -28,9 +28,7 @@ export function useFocusTrap(
       return
     }
 
-    const focusable = getFocusableElements(root)
-    const target = focusable[0] ?? root
-    target.focus()
+    root.focus()
   }
 
   function onKeydown(event: KeyboardEvent): void {

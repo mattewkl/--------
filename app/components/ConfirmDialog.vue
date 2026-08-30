@@ -2,10 +2,11 @@
   <BaseModal
     :open="open"
     :title="title"
+    :description-id="descriptionId"
     :close-on-backdrop="closeOnBackdrop"
     @close="cancel"
   >
-    <p class="confirm-dialog__message">
+    <p :id="descriptionId" class="confirm-dialog__message">
       <slot>{{ message }}</slot>
     </p>
     <template #footer>
@@ -20,6 +21,8 @@
 </template>
 
 <script setup lang="ts">
+const descriptionId = useId()
+
 withDefaults(defineProps<{
   open: boolean
   title: string

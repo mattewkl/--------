@@ -104,12 +104,20 @@ function commitText(): void {
   grid-template-columns: auto minmax(0, 1fr);
 }
 
+.todo-item--preview .todo-item__check {
+  width: 1.15rem;
+  height: 1.15rem;
+  margin: 0.2rem 0 0;
+}
+
 .todo-item__check {
   position: relative;
   display: inline-flex;
-  width: 1.15rem;
-  height: 1.15rem;
-  margin-top: 0.2rem;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin: -0.5rem 0 0 -0.5rem;
 }
 
 .todo-item__box {
@@ -169,13 +177,19 @@ function commitText(): void {
 
 .todo-item__input {
   width: 100%;
-  padding: 0.1rem 0.15rem;
+  min-height: 2.75rem;
+  padding: 0.35rem 0.15rem;
   border: none;
   border-bottom: 1px dashed var(--line);
   background: transparent;
 
   &:focus {
     outline: none;
+  }
+
+  &:focus-visible {
+    outline: 2px dashed var(--focus);
+    outline-offset: 3px;
     border-bottom-color: var(--ink);
   }
 }

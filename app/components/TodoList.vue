@@ -74,6 +74,7 @@ function add(): void {
 .todo-list__field {
   flex: 1 1 12rem;
   min-width: 0;
+  min-height: 2.75rem;
   padding: 0.35rem 0.2rem;
   border: none;
   border-bottom: 1px dashed var(--line);
@@ -81,6 +82,11 @@ function add(): void {
 
   &:focus {
     outline: none;
+  }
+
+  &:focus-visible {
+    outline: 2px dashed var(--focus);
+    outline-offset: 3px;
     border-bottom-color: var(--ink);
   }
 }

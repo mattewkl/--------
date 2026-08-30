@@ -1,6 +1,6 @@
 <template>
   <article class="note-card">
-    <h3 class="note-card__title">{{ note.title }}</h3>
+    <h2 class="note-card__title">{{ note.title }}</h2>
     <NotePreviewList :todos="note.todos" />
     <div class="note-card__actions">
       <BaseButton variant="pencil" @click="emit('edit', note.id)">

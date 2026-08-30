@@ -11,7 +11,7 @@
     </BaseButton>
     <span class="editor-toolbar__gap" aria-hidden="true" />
     <IconButton
-      label="Отменить изменение"
+      label="Отменить изменение (Ctrl+Z)"
       :disabled="!canUndo"
       @click="emit('undo')"
     >
@@ -27,7 +27,7 @@
       </svg>
     </IconButton>
     <IconButton
-      label="Повторить изменение"
+      label="Повторить изменение (Shift+Ctrl+Z)"
       :disabled="!canRedo"
       @click="emit('redo')"
     >
@@ -71,6 +71,12 @@ const emit = defineEmits<{
   flex-wrap: wrap;
   align-items: center;
   gap: 0.45rem;
+}
+
+@media (max-width: 480px) {
+  .editor-toolbar :deep(.base-button) {
+    flex: 1 1 calc(50% - 0.45rem);
+  }
 }
 
 .editor-toolbar__gap {

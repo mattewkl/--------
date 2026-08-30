@@ -2,7 +2,6 @@
   <div class="home">
     <div class="home__toolbar">
       <BaseButton @click="goCreate">Новая заметка</BaseButton>
-      <NuxtLink to="/ui" class="home__catalog">каталог UI</NuxtLink>
     </div>
 
     <EmptyState v-if="store.notes.length === 0">
@@ -74,15 +73,9 @@ useHead({
   margin-bottom: 1.1rem;
 }
 
-.home__catalog {
-  color: var(--ink-soft);
-  font-family: var(--font-hand);
-  font-size: 1.15rem;
-}
-
 .home__cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr));
   gap: 1rem;
 }
 

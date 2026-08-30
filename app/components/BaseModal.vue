@@ -14,6 +14,7 @@
         role="dialog"
         aria-modal="true"
         :aria-labelledby="titleId"
+        :aria-describedby="descriptionId"
         tabindex="-1"
       >
         <header class="modal-root__header">
@@ -50,9 +51,11 @@
 const props = withDefaults(defineProps<{
   open: boolean
   title?: string
+  descriptionId?: string
   closeOnBackdrop?: boolean
 }>(), {
   title: 'Диалог',
+  descriptionId: undefined,
   closeOnBackdrop: true,
 })
 

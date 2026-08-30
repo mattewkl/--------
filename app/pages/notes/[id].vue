@@ -1,7 +1,7 @@
 <template>
   <div class="edit-page">
     <p class="edit-page__back">
-      <NuxtLink to="/">← к списку</NuxtLink>
+      <NuxtLink to="/" class="edit-page__back-link">← к списку</NuxtLink>
     </p>
 
     <EmptyState v-if="missing">
@@ -124,8 +124,12 @@ useHead({
   font-size: 0.95rem;
 }
 
-.edit-page__back a {
-  color: var(--ink-soft);
+.edit-page__back-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  color: var(--ink);
+  text-underline-offset: 0.18em;
 }
 
 .edit-page__warn {

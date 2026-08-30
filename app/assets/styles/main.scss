@@ -29,6 +29,8 @@
   max-width: 52rem;
   margin: 0 auto;
   min-height: calc(100dvh - 2rem);
+  min-width: 0;
+  overflow-x: clip;
   padding: 1.25rem var(--sheet-pad) 2.5rem calc(var(--spine) + 1rem);
   box-shadow: var(--shadow-sheet);
   @include lined-paper;
@@ -66,6 +68,7 @@
   :root {
     --spine: 1.85rem;
     --rule-gap: 1.6rem;
+    --sheet-pad: 1rem;
   }
 
   .notebook {
@@ -75,7 +78,12 @@
   .notebook__desk {
     min-height: 100dvh;
     box-shadow: none;
-    padding-right: 1rem;
+    padding-right: 0.85rem;
+    padding-left: calc(var(--spine) + 0.7rem);
+  }
+
+  .notebook__holes {
+    left: 0.35rem;
   }
 }
 

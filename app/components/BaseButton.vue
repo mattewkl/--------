@@ -27,7 +27,7 @@ withDefaults(defineProps<{
   align-items: center;
   justify-content: center;
   gap: 0.4rem;
-  min-height: 2.5rem;
+  min-height: 2.75rem;
   padding: 0.35rem 0.95rem;
   border: 1.5px solid currentColor;
   border-radius: var(--radius-btn);

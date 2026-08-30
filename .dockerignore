@@ -1,0 +1,14 @@
+.git
+.github
+.cursor
+.nuxt
+.output
+.node_modules
+node_modules
+coverage
+.vitest
+*.log
+.idea
+.vscode
+.env
+.env.*

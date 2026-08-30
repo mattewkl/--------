@@ -19,6 +19,7 @@
         :value="title"
         :aria-invalid="Boolean(titleError)"
         :aria-describedby="titleError ? 'note-title-error' : undefined"
+        autocomplete="off"
         @input="emit('update:title', ($event.target as HTMLInputElement).value)"
         @blur="emit('titleBlur')"
       >
@@ -102,13 +103,18 @@ const emit = defineEmits<{
   border-bottom: 1.5px solid var(--ink-soft);
   background: transparent;
   font-family: var(--font-hand);
-  font-size: 2rem;
+  font-size: clamp(1.55rem, 5vw, 2rem);
   font-weight: 700;
   line-height: 1.1;
   color: var(--ink);
 
   &:focus {
     outline: none;
+  }
+
+  &:focus-visible {
+    outline: 2px dashed var(--focus);
+    outline-offset: 3px;
     border-bottom-style: dashed;
   }
 }
