@@ -27,18 +27,25 @@
 <script setup lang="ts">
 import type { Todo } from '~/types/note'
 
-defineProps<{
+const props = withDefaults(defineProps<{
   todos: Todo[]
-}>()
+  pendingTodo?: string
+}>(), {
+  pendingTodo: '',
+})
 
 const emit = defineEmits<{
   add: [text: string]
   remove: [id: string]
   toggle: [id: string]
   updateText: [id: string, text: string]
+  'update:pendingTodo': [value: string]
 }>()
 
-const draft = ref('')
+const draft = computed({
+  get: () => props.pendingTodo ?? '',
+  set: (value: string) => emit('update:pendingTodo', value),
+})
 
 function add(): void {
   const text = draft.value.trim()

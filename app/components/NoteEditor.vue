@@ -20,6 +20,7 @@
         :aria-invalid="Boolean(titleError)"
         :aria-describedby="titleError ? 'note-title-error' : undefined"
         @input="emit('update:title', ($event.target as HTMLInputElement).value)"
+        @blur="emit('titleBlur')"
       >
     </label>
     <p
@@ -33,10 +34,12 @@
     <p class="note-editor__label">Пункты</p>
     <TodoList
       :todos="todos"
+      :pending-todo="pendingTodo"
       @add="emit('addTodo', $event)"
       @remove="emit('removeTodo', $event)"
       @toggle="emit('toggleTodo', $event)"
       @update-text="(id, text) => emit('updateTodoText', id, text)"
+      @update:pending-todo="emit('update:pendingTodo', $event)"
     />
   </div>
 </template>
@@ -47,11 +50,13 @@ import type { Todo } from '~/types/note'
 withDefaults(defineProps<{
   title: string
   todos: Todo[]
+  pendingTodo?: string
   titleError?: string
   canUndo?: boolean
   canRedo?: boolean
   canSave?: boolean
 }>(), {
+  pendingTodo: '',
   titleError: '',
   canUndo: false,
   canRedo: false,
@@ -65,10 +70,12 @@ const emit = defineEmits<{
   undo: []
   redo: []
   'update:title': [value: string]
+  titleBlur: []
   addTodo: [text: string]
   removeTodo: [id: string]
   toggleTodo: [id: string]
   updateTodoText: [id: string, text: string]
+  'update:pendingTodo': [value: string]
 }>()
 </script>
 

@@ -1,8 +1,8 @@
 <template>
   <ConfirmDialog
     :open="open"
-    title="Восстановить черновик?"
-    message="Есть несохранённое редактирование. Можно вернуть его или начать заново."
+    :title="title"
+    :message="message"
     confirm-label="Восстановить"
     cancel-label="Отказаться"
     :close-on-backdrop="false"
@@ -13,9 +13,14 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
+withDefaults(defineProps<{
   open: boolean
-}>()
+  title?: string
+  message?: string
+}>(), {
+  title: 'Восстановить черновик?',
+  message: 'Есть несохранённое редактирование. Можно вернуть его или начать заново.',
+})
 
 const emit = defineEmits<{
   restore: []
